@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Gudang</title>
+    <!-- Menggunakan Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Menggunakan Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Menggunakan Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@0.292.0/dist/lucide-react.js"></script>
+    <!-- Library untuk membuat file Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex h-screen">
+        <!-- Sidebar Navigasi -->
+        <aside class="w-64 bg-white shadow-md flex flex-col">
+            <div class="p-6 border-b">
+                <h1 class="text-2xl font-bold text-indigo-600">GudangKu</h1>
+                <p class="text-sm text-gray-500">Manajemen Inventaris</p>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="#" id="nav-dashboard" class="flex items-center px-4 py-2 text-gray-700 bg-gray-200 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 mr-3">
+                        <rect width="7" height="9" x="3" y="3" rx="1" />
+                        <rect width="7" height="5" x="14" y="3" rx="1" />
+                        <rect width="7" height="9" x="14" y="12" rx="1" />
+                        <rect width="7" height="5" x="3" y="16" rx="1" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#" id="nav-stock"
+                    class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 mr-3">
+                        <path
+                            d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                        <path d="m3.3 7 8.7 5 8.7-5" />
+                        <path d="M12 22V12" />
+                    </svg>
+                    Manajemen Stok
+                </a>
+                <a href="#" id="nav-inbound"
+                    class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 mr-3">
+                        <path d="M12 22v-6" />
+                        <path d="M12 16H8a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4Z" />
+                        <path d="M12 16v6" />
+                        <path d="m15 13-3 3-3-3" />
+                    </svg>
+                    Barang Masuk
+                </a>
+                <a href="#" id="nav-outbound"
+                    class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 mr-3">
+                        <path d="M12 22v-6" />
+                        <path d="M12 16H8a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-4Z" />
+                        <path d="M12 16v6" />
+                        <path d="m15 19-3-3-3 3" />
+                    </svg>
+                    Barang Keluar
+                </a>
+                <a href="#" id="nav-report"
+                    class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-5 h-5 mr-3">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
+                    </svg>
+                    Laporan
+                </a>
+            </nav>
+            <div class="p-6 border-t mt-auto">
+                <div class="flex items-center">
+                    <img src="https://placehold.co/40x40/E2E8F0/4A5568?text=M" alt="Manager Avatar"
+                        class="rounded-full">
+                    <div class="ml-3">
+                        <p class="font-semibold">Manager Gudang</p>
+                        <p class="text-sm text-gray-500">online</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Konten Utama -->
+        <main id="app-content" class="flex-1 p-8 overflow-y-auto">
+            <!-- Konten akan dirender oleh JavaScript di sini -->
+        </main>
+    </div>
+
+    <!-- Modal Notifikasi (tersembunyi secara default) -->
+    <div id="notification-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="text-xl font-semibold">Notifikasi Sistem</h3>
+                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="notification-content" class="mt-4">
+                <!-- Konten notifikasi akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
