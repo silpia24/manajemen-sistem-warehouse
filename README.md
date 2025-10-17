@@ -1,2 +1,2 @@
 # manajemen-sistem-warehouse
-Matkul ANALISA&amp;PERANC SISTEM-S2 (kary pusat-0925)
+[Preview Website](https://silpia24.github.io/manajemen-sistem-warehouse/)
